@@ -1,0 +1,393 @@
+/* ── Settings Page ────────────────────────────────────────── */
+
+.settings-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(16, 185, 129, 0.02) 0%, transparent 50%);
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+
+.settings-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.settings-heading {
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.settings-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+/* ── Stats ───────────────────────────────────────────────── */
+
+.settings-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+  animation: slideDown 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.sett-stat-card {
+  --accent: #6366f1;
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+  transition: all var(--transition-base);
+  backdrop-filter: blur(12px);
+}
+
+.sett-stat-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 12%, transparent);
+  transform: translateY(-2px);
+}
+
+.sett-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+  background: var(--accent);
+}
+
+.sett-stat-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.sett-stat-value {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.sett-stat-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.sett-stat-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  height: 3px;
+  background: var(--accent);
+  opacity: 0.4;
+  border-radius: 0 2px 2px 0;
+  animation: statBarIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes statBarIn {
+  from { width: 0; }
+  to { width: 60%; }
+}
+
+/* ── Section Cards ───────────────────────────────────────── */
+
+.settings-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeSlideUp 0.4s ease both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.settings-section-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: all var(--transition-base);
+  backdrop-filter: blur(12px);
+  animation: slideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.settings-section-card:nth-child(1) { animation-delay: 0s; }
+.settings-section-card:nth-child(2) { animation-delay: 0.08s; }
+.settings-section-card:nth-child(3) { animation-delay: 0.16s; }
+.settings-section-card:nth-child(4) { animation-delay: 0.24s; }
+.settings-section-card:nth-child(5) { animation-delay: 0.32s; }
+
+.settings-section-card:hover {
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.settings-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.settings-section-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-dim);
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.settings-section-title h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ── Settings Items ──────────────────────────────────────── */
+
+.settings-items {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.settings-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-item-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.settings-saved-icon {
+  color: var(--success);
+  animation: scaleIn 0.2s ease;
+}
+
+.settings-item-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.settings-item-control {
+  flex-shrink: 0;
+}
+
+/* ── Toggle Group ────────────────────────────────────────── */
+
+.settings-toggle-group {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: 3px;
+}
+
+.settings-toggle-opt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 16px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.settings-toggle-opt:hover {
+  color: var(--text-secondary);
+}
+
+.settings-toggle-opt.active {
+  background: var(--bg-secondary);
+  color: var(--accent-primary);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ── Action Buttons ──────────────────────────────────────── */
+
+.settings-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.settings-action-btn:hover {
+  border-color: var(--accent-dim);
+  color: var(--accent-primary);
+  background: var(--bg-hover);
+}
+
+.settings-action-btn.danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.settings-action-btn.danger:hover {
+  background: var(--danger-dim);
+  color: var(--danger);
+  box-shadow: 0 0 0 2px var(--danger-dim);
+}
+
+/* ── Toggle Switch ───────────────────────────────────────── */
+
+.settings-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.settings-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.settings-switch-track {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  transition: all var(--transition-fast);
+}
+
+.settings-switch input:checked + .settings-switch-track {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.settings-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-switch input:checked + .settings-switch-track .settings-switch-thumb {
+  left: 22px;
+  background: white;
+}
+
+.settings-switch-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  min-width: 52px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .settings-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .settings-heading {
+    font-size: 1.3rem;
+  }
+
+  .settings-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .settings-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .settings-item-control {
+    width: 100%;
+  }
+
+  .settings-toggle-group {
+    width: 100%;
+  }
+
+  .settings-toggle-opt {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .settings-action-btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .settings-section-card {
+    padding: 16px;
+  }
+}

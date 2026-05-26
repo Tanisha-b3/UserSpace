@@ -1,0 +1,47 @@
+.skeleton-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--border);
+  margin-bottom: 1rem;
+}
+
+.skeleton-line {
+  height: 14px;
+  border-radius: 7px;
+  background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  width: 100%;
+  margin-bottom: 0.6rem;
+}
+
+.skeleton-name {
+  width: 60%;
+  height: 18px;
+}
+
+.skeleton-username {
+  width: 40%;
+  height: 12px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-details {
+  width: 100%;
+}
+
+.skeleton-details .skeleton-line {
+  height: 12px;
+}
