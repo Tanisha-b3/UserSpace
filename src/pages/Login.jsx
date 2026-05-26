@@ -114,12 +114,12 @@ function Login() {
 
   return (
     <div className="login-split-container">
-      <button className="theme-toggle-split" onClick={toggleTheme}>
+      {/* <button className="theme-toggle-split" onClick={toggleTheme}>
         {isDark ? '☀️' : '🌙'}
-      </button>
+      </button> */}
 
-      {/* LEFT PANEL — BRAND / HERO SECTION */}
-      <div className="hero-side">
+      {/* LEFT PANEL — HIDDEN ON MOBILE */}
+      <div className="hero-side hero-side-desktop">
         <div className="hero-bg-glow"></div>
         <div className="hero-content">
           <div className="hero-logo">
@@ -154,10 +154,20 @@ function Login() {
         </div>
       </div>
 
-      {/* RIGHT PANEL — LOGIN FORM */}
+      {/* RIGHT PANEL — LOGIN FORM (visible on all devices) */}
       <div className="form-side">
         <div className="form-card">
-          <div className="form-header">
+          {/* Mobile Header - Only visible on mobile */}
+          <div className="mobile-header">
+            <div className="mobile-logo">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <path d="M22 6L12 13 2 6" />
+                <path d="M12 13v8" />
+                <path d="M8 9h8" />
+              </svg>
+              <span>NoteSpace</span>
+            </div>
             <h2>Welcome back</h2>
             <p>Sign in to continue your journey</p>
           </div>
@@ -285,7 +295,7 @@ function Login() {
 
           <div className="demo-split-card">
             <div className="demo-flex">
-            
+             
               <div className="demo-cred">
                 <code>demo@example.com</code>
                 <span className="dot-sep">•</span>
