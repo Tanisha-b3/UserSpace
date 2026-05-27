@@ -1,6 +1,8 @@
 /* ── Favorites Page ──────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500;600&display=swap');
 
 .favorites-page {
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
   background: var(--bg-primary);
   background-image:

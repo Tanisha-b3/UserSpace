@@ -1,9 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .login-split-container {
   display: flex;
   min-height: 100vh;
@@ -17,6 +11,8 @@
 .login-split-container.loaded {
   opacity: 1;
 }
+
+.split-form { width:100%; }
 
 /* ----- FLOATING SHAPES ----- */
 .floating-shapes {

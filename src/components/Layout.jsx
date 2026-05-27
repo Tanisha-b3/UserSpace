@@ -9,10 +9,21 @@ export default function Layout() {
     return localStorage.getItem('sidebarCollapsed') === 'true'
   })
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [userCount, setUserCount] = useState(0)
+  const [favCount, setFavCount] = useState(0)
+  const [userName, setUserName] = useState('')
 
   useEffect(() => {
     localStorage.setItem('sidebarCollapsed', String(sidebarCollapsed))
   }, [sidebarCollapsed])
+
+  useEffect(() => {
+    const users = JSON.parse(localStorage.getItem('users') || '[]')
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+    setUserCount(users.length)
+    setFavCount(favorites.length)
+    setUserName(localStorage.getItem('userName') || localStorage.getItem('userEmail') || '')
+  }, [])
 
   const toggleSidebar = useCallback(() => {
     setSidebarCollapsed(prev => !prev)
@@ -30,7 +41,7 @@ export default function Layout() {
         onMobileClose={closeMobile}
       />
       <div className={`app-layout-main ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-        <Navbar onMenuToggle={openMobile} />
+        <Navbar onMenuToggle={openMobile} userName={userName} userCount={userCount} favCount={favCount} />
         <main className="app-layout-content">
           <Outlet />
         </main>

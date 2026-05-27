@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
-import { Users, Star, Building2, Globe, Search, RefreshCw, Download, ChevronLeft, ChevronRight, Grid3X3, List, Check, X, AlertTriangle, Info, FileText, Clipboard, GripVertical, ArrowRight, MapPin, Phone, Mail, Home, Tag, MessageSquare, Briefcase, Save, Pencil, Keyboard, Trash2, Target, CheckSquare, User, TrendingUp } from "lucide-react";
+import { Users, Star, Building2, Globe, Search, RefreshCw, Download, ChevronLeft, ChevronRight, Grid3X3, List, Check, X, AlertTriangle, Info, FileText, Clipboard, GripVertical, ArrowRight, MapPin, Phone, Mail, Home, Tag, MessageSquare, Briefcase, Save, Pencil, Keyboard, Target, User, TrendingUp } from "lucide-react";
 import "./Dashboard.css";
 
 const PAGE_SIZE = 8;
@@ -363,26 +363,21 @@ function StatCard({ stat, idx }) {
 }
 
 /* ── Drag-and-Drop User Cards ─────────────────────────────── */
-function DraggableUserCard({ user, onSelect, isFav, onToggleFav, isSelected, onSelectToggle, bulkMode, index, onDragStart, onDragOver, onDrop, isDraggingOver }) {
+function DraggableUserCard({ user, onSelect, isFav, onToggleFav, index, onDragStart, onDragOver, onDrop, isDraggingOver }) {
   const st = avatarStyle(user.id);
   const ref = useRef(null);
 
   return (
     <div
       ref={ref}
-      className={`user-card-modern ${isSelected ? "selected" : ""} ${isDraggingOver ? "drag-over" : ""}`}
+      className={`user-card-modern ${isDraggingOver ? "drag-over" : ""}`}
       draggable
       onDragStart={() => onDragStart(index)}
       onDragOver={e => { e.preventDefault(); onDragOver(index); }}
       onDrop={() => onDrop(index)}
-      onClick={() => { if (bulkMode) onSelectToggle?.(user.id); else onSelect(user); }}
+      onClick={() => onSelect(user)}
     >
       <div className="drag-handle" title="Drag to reorder"><GripVertical size={14} /></div>
-      {bulkMode && (
-        <div className={`card-checkbox ${isSelected ? "checked" : ""}`}>
-          {isSelected && <Check size={12} strokeWidth={3} />}
-        </div>
-      )}
       <div className="card-header">
         <div className="user-avatar-modern" style={st}>{getInitials(user.name)}</div>
         <button className={`favorite-btn-modern ${isFav ? "active" : ""}`}
@@ -420,7 +415,7 @@ function DraggableUserCard({ user, onSelect, isFav, onToggleFav, isSelected, onS
 }
 
 /* ── User Table ───────────────────────────────────────────── */
-function UserTable({ users, onSelect, sortField, sortDir, onSort, selectedIds, onSelectUser, bulkMode }) {
+function UserTable({ users, onSelect, sortField, sortDir, onSort }) {
   const cols = [
     { key: "name", label: "User", icon: <User size={13} /> },
     { key: "email", label: "Email", icon: <Mail size={13} /> },
@@ -433,7 +428,6 @@ function UserTable({ users, onSelect, sortField, sortDir, onSort, selectedIds, o
       <table className="modern-table">
         <thead>
           <tr>
-            {bulkMode && <th style={{ width: 48 }}></th>}
             {cols.map(c => (
               <th key={c.key} onClick={() => onSort(c.key)} className={sortField === c.key ? "sorted" : ""}>
                 <span className="th-content">
@@ -447,13 +441,6 @@ function UserTable({ users, onSelect, sortField, sortDir, onSort, selectedIds, o
         <tbody>
           {users.map(u => (
             <tr key={u.id} className="table-row-modern">
-              {bulkMode && (
-                <td>
-                  <div className={`table-checkbox ${selectedIds.has(u.id) ? "checked" : ""}`} onClick={() => onSelectUser?.(u.id)}>
-                    {selectedIds.has(u.id) && <Check size={10} strokeWidth={3} />}
-                  </div>
-                </td>
-              )}
               <td className="user-cell" onClick={() => onSelect(u)}>
                 <div className="user-avatar-small" style={avatarStyle(u.id)}>{getInitials(u.name)}</div>
                 <span className="user-name-cell">{u.name}</span>
@@ -597,8 +584,8 @@ export default function Dashboard() {
   const [editingUser, setEditingUser] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(true);
-  const [bulkMode, setBulkMode] = useState(false);
-  const [selIds, setSelIds] = useState(new Set());
+  const [greeting, setGreeting] = useState('');
+  const [liveDate, setLiveDate] = useState('');
 
   const [cardOrder, setCardOrder] = useState([]);
   const [dragFrom, setDragFrom] = useState(null);
@@ -627,6 +614,17 @@ export default function Dashboard() {
 
   useEffect(() => { localStorage.setItem("viewMode", viewMode); }, [viewMode]);
   useEffect(() => { mainRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }, [page]);
+
+  useEffect(() => {
+    const hrs = new Date().getHours();
+    if (hrs < 12) setGreeting('Good morning');
+    else if (hrs < 18) setGreeting('Good afternoon');
+    else setGreeting('Good evening');
+    const updateDate = () => setLiveDate(new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }));
+    updateDate();
+    const id = setInterval(updateDate, 60000);
+    return () => clearInterval(id);
+  }, []);
 
   const refresh = useCallback(async () => {
     setRefreshing(true);
@@ -662,26 +660,6 @@ export default function Dashboard() {
     a.click(); URL.revokeObjectURL(a.href);
     addToast(`📋 Exported ${users.length} users as JSON`, "success");
   }, [users, addToast]);
-
-  const bulkDelete = useCallback(() => {
-    if (!selIds.size) return;
-    if (window.confirm(`Delete ${selIds.size} user(s)?`)) {
-      setUsers(p => p.filter(u => !selIds.has(u.id)));
-      setCardOrder(p => p.filter(id => !selIds.has(id)));
-      addToast(`🗑️ Deleted ${selIds.size} user(s)`, "warning");
-      setSelIds(new Set());
-    }
-  }, [selIds, addToast]);
-
-  const bulkFavorite = useCallback(() => {
-    selIds.forEach(id => { if (!isFav(id)) toggleFav(id); });
-    addToast(`⭐ Favorited ${selIds.size} users`, "success");
-    setSelIds(new Set()); setBulkMode(false);
-  }, [selIds, isFav, toggleFav, addToast]);
-
-  const toggleSelection = useCallback((id) => {
-    setSelIds(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
-  }, []);
 
   const cities = useMemo(() => [...new Set(users.map(u => u.address?.city).filter(Boolean))].sort(), [users]);
   const companies = useMemo(() => [...new Set(users.map(u => u.company?.name).filter(Boolean))].sort(), [users]);
@@ -761,27 +739,26 @@ export default function Dashboard() {
         if (e.key === "f") { e.preventDefault(); document.querySelector(".search-input-enhanced")?.focus(); }
         if (e.key === "e") { e.preventDefault(); exportCSV(); }
         if (e.key === "r") { e.preventDefault(); refresh(); }
-        if (e.key === "k") { e.preventDefault(); setBulkMode(p => !p); }
         if (e.key === "d") { e.preventDefault(); toggleTheme(); }
       }
-      if (e.key === "Escape") { setSelectedUser(null); setEditingUser(null); setSelIds(new Set()); }
+      if (e.key === "Escape") { setSelectedUser(null); setEditingUser(null); }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [exportCSV, refresh]);
 
-  return (
+   return (
     <div className="dashboard-enhanced">
 
        <div className="dashboard-page-header">
           <div>
-            <h1 className="dashboard-heading">Dashboard</h1>
-            <p className="dashboard-subtitle">Real-time insights and trends from your user data</p>
+            <h1 className="dashboard-heading">{greeting}{users.length > 0 && <span className="heading-name">, {users.find(u => u.email === localStorage.getItem('userEmail'))?.name?.split(' ')[0] || 'there'}</span>}</h1>
+            <div className="dashboard-subtitle-row">
+              <span className="dashboard-subtitle"><span className="live-dot"></span> {liveDate}</span>
+              {users.length > 0 && <span className="user-count-badge"><Users size={12} /> {users.length} users</span>}
+            </div>
           </div>
-          
         </div>
-
-
 
 
       {/* ── Main ── */}
@@ -809,22 +786,6 @@ export default function Dashboard() {
             )}
           </>
         )}
-
-        {/* Bulk Bar */}
-        {/* {bulkMode && (
-          <div className="bulk-bar-enhanced">
-            <div className="bulk-info">
-              <CheckSquare size={16} />
-              <span className="bulk-count">{selIds.size} selected</span>
-            </div>
-            <div className="bulk-actions">
-              <button className="bulk-btn" onClick={() => { setSelIds(new Set(paginated.map(u => u.id))); }}>Select Page</button>
-              <button className="bulk-btn fav" onClick={bulkFavorite} disabled={!selIds.size}><Star size={13} /> Favorite</button>
-              <button className="bulk-btn danger" onClick={bulkDelete} disabled={!selIds.size}><Trash2 size={13} /> Delete</button>
-              <button className="bulk-btn" onClick={() => { setSelIds(new Set()); setBulkMode(false); }}>Cancel</button>
-            </div>
-          </div>
-        )} */}
 
         {/* Controls */}
         <div className="controls-enhanced">
@@ -877,9 +838,6 @@ export default function Dashboard() {
             <button className={`filter-btn ${filters.favOnly ? "active" : ""}`} onClick={() => updateFilter("favOnly", !filters.favOnly)}>
               <Star size={14} /> Favorites {favCount > 0 && <span className="filter-count">{favCount}</span>}
             </button>
-            {/* <button className={`bulk-btn-enhanced ${bulkMode ? "active" : ""}`} onClick={() => setBulkMode(!bulkMode)} title="Ctrl+K">
-              <CheckSquare size={14} /> Bulk
-            </button> */}
             {hasFilters && <button className="clear-filters-btn" onClick={clearFilters}>✕ Clear</button>}
           </div>
         </div>
@@ -927,9 +885,6 @@ export default function Dashboard() {
                       onSelect={setSelectedUser}
                       isFav={isFav(user.id)}
                       onToggleFav={toggleFav}
-                      isSelected={selIds.has(user.id)}
-                      onSelectToggle={toggleSelection}
-                      bulkMode={bulkMode}
                       onDragStart={handleDragStart}
                       onDragOver={handleDragOver}
                       onDrop={handleDrop}
@@ -944,9 +899,6 @@ export default function Dashboard() {
                   sortField={sortField}
                   sortDir={sortDir}
                   onSort={handleSort}
-                  selectedIds={selIds}
-                  onSelectUser={toggleSelection}
-                  bulkMode={bulkMode}
                 />
               )}
 
@@ -966,7 +918,6 @@ export default function Dashboard() {
             <li><kbd>Ctrl+D</kbd> Toggle theme</li>
             <li><kbd>Ctrl+E</kbd> Export CSV</li>
             <li><kbd>Ctrl+R</kbd> Refresh</li>
-            <li><kbd>Ctrl+K</kbd> Bulk mode</li>
             <li><kbd>Esc</kbd> Close / clear</li>
           </ul>
         </div>

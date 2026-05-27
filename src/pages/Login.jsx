@@ -200,7 +200,7 @@ function Login() {
           </div>
         </div>
         <div className="hero-footer-note">
-          <span>© 2025 NoteSpace — where clarity lives.</span>
+          <span>© {new Date().getFullYear()} NoteSpace — where clarity lives.</span>
         </div>
       </div>
 
@@ -308,9 +308,9 @@ function Login() {
                 <span className="check-custom"></span>
                 <span>Remember me</span>
               </label>
-              <Link to="/forgot-password" className="forgot-link-split">
+              <button type="button" className="forgot-link-split" onClick={() => addToast('Password reset feature coming soon!', 'info')}>
                 Forgot password?
-              </Link>
+              </button>
             </div>
 
             <button type="submit" className="login-split-btn" disabled={loading}>
@@ -329,7 +329,16 @@ function Login() {
             <span>or continue with</span>
           </div>
 
-         
+          <div className="social-row">
+            <button type="button" className="social-split-btn" onClick={() => handleSocialLogin('Google')}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+              Google
+            </button>
+            <button type="button" className="social-split-btn" onClick={() => handleSocialLogin('GitHub')}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </button>
+          </div>
 
           <div className="demo-split-card">
             <div className="demo-flex">

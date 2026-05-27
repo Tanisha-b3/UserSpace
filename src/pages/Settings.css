@@ -1,6 +1,8 @@
 /* ── Settings Page ────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
 
 .settings-page {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
   background: var(--bg-primary);
   background-image:
