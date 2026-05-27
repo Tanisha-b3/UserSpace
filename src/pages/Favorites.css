@@ -144,7 +144,8 @@
 
 .favs-card {
   position: relative;
-  background: var(--bg-secondary);
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   padding: 20px;
@@ -224,6 +225,11 @@
   top: -4px;
   right: -4px;
   filter: drop-shadow(0 1px 3px rgba(245, 158, 11, 0.4));
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.favs-card:hover .favs-star-icon {
+  transform: rotate(15deg) scale(1.15);
 }
 
 .favs-card-info {

@@ -14,10 +14,11 @@
   width: 480px;
   max-width: 100vw;
   height: 100vh;
-  background: var(--bg-card);
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur);
   z-index: 501;
-  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
-  animation: slideInRight 0.3s ease;
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.12);
+  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -67,7 +68,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: var(--primary-gradient);
+  background: var(--accent-gradient);
   color: #fff;
   display: flex;
   align-items: center;
@@ -75,6 +76,13 @@
   font-size: 1.8rem;
   font-weight: 700;
   margin: 0 auto 1rem;
+  box-shadow: 0 0 24px var(--accent-glow);
+  animation: avatarFloat 3s ease-in-out infinite;
+}
+
+@keyframes avatarFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 .detail-name {

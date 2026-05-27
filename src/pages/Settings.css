@@ -129,12 +129,12 @@
 }
 
 .settings-section-card {
-  background: var(--bg-secondary);
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   padding: 24px;
   transition: all var(--transition-base);
-  backdrop-filter: blur(12px);
   animation: slideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -251,9 +251,13 @@
 }
 
 .settings-toggle-opt.active {
-  background: var(--bg-secondary);
-  color: var(--accent-primary);
-  box-shadow: var(--shadow-xs);
+  background: var(--accent-gradient);
+  color: white;
+  box-shadow: 0 2px 12px var(--accent-glow);
+}
+
+.settings-toggle-opt.active svg {
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.3));
 }
 
 /* ── Action Buttons ──────────────────────────────────────── */
@@ -263,7 +267,8 @@
   align-items: center;
   gap: 6px;
   padding: 7px 16px;
-  background: var(--bg-secondary);
+  background: var(--bg-glass);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   color: var(--text-secondary);
@@ -277,16 +282,23 @@
   border-color: var(--accent-dim);
   color: var(--accent-primary);
   background: var(--bg-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-action-btn:active {
+  transform: scale(0.96);
 }
 
 .settings-action-btn.danger {
   color: var(--danger);
-  border-color: var(--danger);
+  border-color: var(--danger-dim);
 }
 
 .settings-action-btn.danger:hover {
   background: var(--danger-dim);
   color: var(--danger);
+  border-color: var(--danger);
   box-shadow: 0 0 0 2px var(--danger-dim);
 }
 
@@ -330,13 +342,22 @@
   height: 18px;
   background: white;
   border-radius: 50%;
-  transition: all var(--transition-fast);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: var(--shadow-sm);
 }
 
 .settings-switch input:checked + .settings-switch-track .settings-switch-thumb {
   left: 22px;
   background: white;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.settings-switch:hover .settings-switch-track {
+  border-color: var(--accent-primary);
+}
+
+.settings-switch input:focus-visible + .settings-switch-track {
+  box-shadow: 0 0 0 3px var(--accent-dim);
 }
 
 .settings-switch-label {

@@ -19,26 +19,30 @@
 }
 
 .user-table thead {
-  background: var(--bg);
+  background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
 }
 
 .user-table th {
   text-align: left;
   padding: 1rem 1.2rem;
-  font-weight: 600;
-  color: var(--text-label);
-  border-bottom: 2px solid var(--border);
+  font-weight: 700;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-light);
   white-space: nowrap;
   user-select: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 .user-table th.sortable {
   cursor: pointer;
-  transition: color var(--transition);
+  transition: all var(--transition-fast);
 }
 
 .user-table th.sortable:hover {
-  color: var(--primary);
+  color: var(--accent-primary);
+  background: var(--accent-dim);
 }
 
 .sort-indicator {
@@ -75,6 +79,14 @@ th.sorted-desc .sort-indicator {
 
 .user-table tbody tr:hover {
   background: var(--bg-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: relative;
+  z-index: 1;
+}
+
+.user-table tbody tr:active {
+  transform: scale(0.995);
 }
 
 .user-table tbody tr:last-child td {

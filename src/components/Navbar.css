@@ -62,6 +62,21 @@
   font-family: var(--font-mono, monospace);
   font-size: 0.78rem;
   color: var(--text-secondary);
+  animation: clockPulse 2s ease-in-out infinite;
+}
+
+@keyframes clockPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+.navbar-clock svg {
+  animation: clockSpin 60s linear infinite;
+}
+
+@keyframes clockSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .navbar-stats {
@@ -225,7 +240,8 @@
   position: absolute;
   top: calc(100% + 12px);
   right: 0;
-  background: white;
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur);
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-lg);
   min-width: 260px;
@@ -233,7 +249,7 @@
   opacity: 0;
   pointer-events: none;
   transform: translateY(-10px) scale(0.95);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: var(--shadow-lg);
   z-index: 800;
 }
@@ -242,6 +258,19 @@
   opacity: 1;
   pointer-events: all;
   transform: translateY(0) scale(1);
+}
+
+.navbar-user-dropdown .navbar-dropdown-item {
+  animation: dropdownItemIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.navbar-user-dropdown .navbar-dropdown-item:nth-child(1) { animation-delay: 0.02s; }
+.navbar-user-dropdown .navbar-dropdown-item:nth-child(2) { animation-delay: 0.04s; }
+.navbar-user-dropdown .navbar-dropdown-item:nth-child(3) { animation-delay: 0.06s; }
+
+@keyframes dropdownItemIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .navbar-dropdown-header {
@@ -394,7 +423,8 @@
   position: absolute;
   top: calc(100% + 12px);
   right: 0;
-  background: white;
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur);
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-lg);
   min-width: 320px;
@@ -402,7 +432,7 @@
   opacity: 0;
   pointer-events: none;
   transform: translateY(-10px) scale(0.95);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: var(--shadow-lg);
   z-index: 300;
   overflow: hidden;

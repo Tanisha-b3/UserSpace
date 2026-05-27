@@ -24,9 +24,13 @@
 .user-card:nth-child(8) { animation-delay: 0.35s; }
 
 .user-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-lg), var(--shadow-card);
-  border-color: var(--primary);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-xl), var(--shadow-card);
+  border-color: var(--accent-primary);
+}
+
+.user-card:active {
+  transform: scale(0.98);
 }
 
 .fav-btn {
